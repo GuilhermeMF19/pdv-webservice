@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.gmf.pdvwebservice.entities.User;
 import com.gmf.pdvwebservice.repositories.UserRepository;
+import com.gmf.pdvwebservice.services.exceptions.ResourceNotFoundException;
 
 
 @Service
@@ -22,7 +23,7 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public User insert(User obj) {
